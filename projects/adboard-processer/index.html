@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adboard Processer, EA Sports FC · Gabriel Reis e Silva</title>
+  <meta name="description" content="Desktop tool for processing EA Sports FC adboard artwork from 100+ partner sources into pipeline-ready assets. Electron / React / MUI / Node / ImageMagick.">
+  <link rel="stylesheet" href="../../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../../assets/img/tools/adboard-processer/boards1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../" class="active">Projects</a></li>
+      <li><a href="../../case-studies/">Case Studies</a></li>
+      <li><a href="../../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="cs-body">
+  <div class="wrap">
+
+    <div class="project-title">
+      <h1>Adboard Processer</h1>
+      <p class="client">EA Sports FC · FIFA · Internal desktop tool · 2023</p>
+    </div>
+
+    <div class="project-hero">
+      <img src="../../assets/img/tools/adboard-processer/boards1.jpg" alt="Adboard Processer, batch of processed FC 24 adboards including Conmebol Sudamericana, Coca-Cola Zero Sugar, MG Motor, Mercado Libre, and DHL banners.">
+    </div>
+    <p class="media-caption">A desktop tool for turning partner-supplied artwork, 100+ brands, leagues, and clubs, into pipeline-ready EA Sports FC adboards.</p>
+
+    <div class="gallery">
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/tools/adboard-processer/adboards.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/tools/adboard-processer/adboards.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/tools/adboard-processer/use1.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/tools/adboard-processer/use1.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/tools/adboard-processer/use2.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/tools/adboard-processer/use2.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/tools/adboard-processer/use3.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/tools/adboard-processer/use3.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/tools/adboard-processer/boards2.jpg" alt="Second batch of processed adboards, showing FIFA 23 sponsor and social media banners with correct 64px height and cropped backgrounds." loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/tools/adboard-processer/doc.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/tools/adboard-processer/doc.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/tools/adboard-processer/tech_stack.png" alt="Technical stack, React, MUI, Node, ImageMagick, and Electron logos." loading="lazy">
+      </figure>
+
+    </div>
+
+    <div class="meta-table">
+      <dl>
+        <dt>Role</dt>
+        <dd>Designer, engineer, owner (solo build)</dd>
+
+        <dt>Team</dt>
+        <dd>Electronic Arts · EA Sports FC / FIFA</dd>
+
+        <dt>Technical Stack</dt>
+        <dd>Electron · React · MUI · Node · ImageMagick</dd>
+
+        <dt>Released</dt>
+        <dd>2023 · Internal EA tool</dd>
+
+        <dt>What it does</dt>
+        <dd>
+          <ul>
+            <li>Batch-process partner adboard artwork into pipeline-ready PNGs at the 64px pipeline height.</li>
+            <li>Convert any inbound image format to PNG, and normalize aspect ratio, including special long-adboard variants.</li>
+            <li>Detect and remove solid backgrounds, keeping the original background color as a hex value for downstream tooling.</li>
+            <li>Navigate a source directory tree with in-app preview, so operators can vet assets before saving.</li>
+            <li>Enforce naming standards on export, so downstream ingestion never sees mislabelled files.</li>
+          </ul>
+        </dd>
+
+        <dt>Impact</dt>
+        <dd>
+          <ul>
+            <li>~80% reduction in per-adboard processing time across the team.</li>
+            <li><strong>Bundesliga refresh, 87 adboards</strong>, original estimate 4 days, actual work 3 hours.</li>
+            <li>100% of assets exported with correct background handling and naming standards after adoption.</li>
+            <li>Eliminated a recurring class of rework caused by manual mis-crops and inconsistent hex keying.</li>
+          </ul>
+        </dd>
+
+        <dt>Why it exists</dt>
+        <dd>
+          <ul>
+            <li>Adboard artwork arrived from 100+ external sources at inconsistent sizes, formats, and background treatments.</li>
+            <li>Manual per-asset prep in image editors was tedious, error-prone, and did not scale to season-refresh cadence.</li>
+            <li>Encoding the standard once in a tool made "correct" the default and freed operators from the checklist.</li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../../scripts/site.js" defer></script>
+
+</body>
+</html>

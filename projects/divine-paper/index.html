@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Divine Paper · Gabriel Reis e Silva</title>
+  <meta name="description" content="VR Chinese calligraphy experience, stroke-aware character recognition, dialogue system, physically-modeled ink brushes. Master's project (UBC / CDM, 2019).">
+  <link rel="stylesheet" href="../../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../../assets/img/installations/divine-paper/Cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../" class="active">Projects</a></li>
+      <li><a href="../../case-studies/">Case Studies</a></li>
+      <li><a href="../../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="cs-body">
+  <div class="wrap">
+
+    <div class="project-title">
+      <h1>Divine Paper · 仙纸</h1>
+      <p class="client">UBC / Centre for Digital Media · Master's Project · 2019</p>
+    </div>
+
+    <div class="project-hero">
+      <img src="../../assets/img/installations/divine-paper/Cover.jpg" alt="Divine Paper, ink-brush key art">
+    </div>
+    <p class="media-caption">Immersive VR interactive story set in a Chinese ink-style world. The player, cast as a god, translates written characters into their real-world counterparts.</p>
+
+    <!-- ============ GALLERY ============ -->
+    <div class="gallery">
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/installations/divine-paper/Visual_story_final_2.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/installations/divine-paper/Visual_story_final_2.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/image1.png" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/image2.png" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/image3.png" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/image4.png" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/4_surprised.jpg" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/hit%20by%20the%20wind3.png" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/ri_still%20ink%20image.png" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/divine-paper/cover2.jpg" alt="" loading="lazy">
+      </figure>
+
+    </div>
+
+    <div class="meta-table">
+      <dl>
+        <dt>Role</dt>
+        <dd>Interaction Developer</dd>
+
+        <dt>Team</dt>
+        <dd>Master's project · UBC / Centre for Digital Media</dd>
+
+        <dt>Technical Stack</dt>
+        <dd>Unity · Oculus SDK · VRToolkit · Google Cloud Vision · Text Mesh Pro</dd>
+
+        <dt>Released</dt>
+        <dd>2019 · Master's project</dd>
+
+        <dt>What I did</dt>
+        <dd>
+          <ul>
+            <li>Integrated VRToolkit for controls, movement, and paper/pen mechanics inside VR.</li>
+            <li>Animated scene objects along the narrative and paced them against the dialogue system.</li>
+            <li>Built a dynamic character-recognition feature that read the user's drawing.</li>
+            <li>Designed the narrative accounting for the camera freedom players have in VR.</li>
+          </ul>
+        </dd>
+
+        <dt>Design challenges</dt>
+        <dd>
+          <ul>
+            <li>Chinese character recognition that respected stroke order and direction, not just correctness.</li>
+            <li>Consistent pacing across all animations so the experience read as one story.</li>
+            <li>Dialogue system supporting pauses, callbacks, and smooth transitions between lines.</li>
+            <li>Realistic rice paper and brush behaviour with limited ink and multiple brush sizes reacting to distance.</li>
+            <li>Sound, movement, and perspective as guidance tools, compensating for VR camera freedom.</li>
+          </ul>
+        </dd>
+
+        <dt>What was built</dt>
+        <dd>
+          <ul>
+            <li>Immersive VR app that teaches common Chinese characters through practice, not drills.</li>
+            <li>Real-time texture editing simulating ink painting on the rice paper.</li>
+            <li>Free-drawing mechanic built on the Oculus SDK.</li>
+            <li>Google Cloud Vision integration for the recognition backend.</li>
+            <li>Custom dialogue system on Unity Text Mesh Pro using Rich Text tags to surface game cues.</li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../../scripts/site.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digital Graffiti Wall · Gabriel Reis e Silva</title>
+  <meta name="description" content="Interactive 6-meter installation combining a Windows app, mobile client, hardware sensors, and a server, deployed in two weeks.">
+  <link rel="stylesheet" href="../../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../../assets/img/installations/digital-graffiti-wall/_banner.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../" class="active">Projects</a></li>
+      <li><a href="../../case-studies/">Case Studies</a></li>
+      <li><a href="../../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="cs-body">
+  <div class="wrap">
+
+    <div class="project-title">
+      <h1>Digital Graffiti Wall</h1>
+      <p class="client">Samsung Valencia · Installation · 2021</p>
+    </div>
+
+    <div class="project-hero">
+      <img src="../../assets/img/installations/digital-graffiti-wall/_banner.jpg" alt="Digital Graffiti Wall installation at Samsung Valencia">
+    </div>
+    <p class="media-caption">A 6-meter interactive installation that lets an audience grab a digital spray can and paint on a shared wall, brandable, hands-on, and rebuilt-per-venue.</p>
+
+    <!-- ============ GALLERY ============ -->
+    <div class="gallery">
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/installations/digital-graffiti-wall/Gabes_spain_project.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/installations/digital-graffiti-wall/Gabes_spain_project.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/digital-graffiti-wall/_the_venue.jpg" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/digital-graffiti-wall/_drawing.jpg" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/digital-graffiti-wall/_best_drawing.jpg" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/digital-graffiti-wall/_fun.jpg" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/digital-graffiti-wall/_good00.jpg" alt="" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/digital-graffiti-wall/_smile.jpg" alt="" loading="lazy">
+      </figure>
+
+    </div>
+
+    <div class="meta-table">
+      <dl>
+        <dt>Role</dt>
+        <dd>Software Engineer</dd>
+
+        <dt>Team</dt>
+        <dd>Small studio, designer + engineer</dd>
+
+        <dt>Technical Stack</dt>
+        <dd>Unity · Windows · mobile · TCP / UDP · sensors + cameras</dd>
+
+        <dt>Released</dt>
+        <dd>2021 · Installation</dd>
+
+        <dt>What I did</dt>
+        <dd>
+          <ul>
+            <li>Managed and tested every piece of the experience: Windows client, mobile app, and coordinating server.</li>
+            <li>Configured the Unity application and assisted with on-site install.</li>
+            <li>Built the Unity scene to client preference and adjusted mobile and server config per venue.</li>
+          </ul>
+        </dd>
+
+        <dt>Constraints</dt>
+        <dd>
+          <ul>
+            <li>Two-week schedule to understand, adjust, and ship a distributed system spanning desktop, mobile, server, cameras, and sensors.</li>
+            <li>6-meter wide display with a 30% content cut-off band, camera viewport had to be reshaped to the visible area.</li>
+            <li>Remote design collaboration for art and lighting, iterating against the client's evolving direction.</li>
+            <li>Damaged hardware components and unpredictable venue conditions on install day.</li>
+            <li>Multiple communication protocols (TCP + UDP) between server, Windows app, and mobile clients.</li>
+          </ul>
+        </dd>
+
+        <dt>What shipped</dt>
+        <dd>
+          <ul>
+            <li>Software architecture aligned to the MVC pattern for maintainability across venues.</li>
+            <li>Camera render viewport reshaped for a multiple-display configuration matching the wall's visible area.</li>
+            <li>Lighting built with Unity reflection probes and baked lights.</li>
+            <li>Fail-safe server/client architecture handling both TCP and UDP protocols.</li>
+            <li>Schedule that flexed to on-site conditions without slipping the install date.</li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../../scripts/site.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UI Linter, Widget Blueprint Static Analysis · Gabriel Reis e Silva</title>
+  <meta name="description" content="A three-pillar UI linting system for Unreal Widget Blueprints. Rules mined from 100+ real Jira bugs, in-Editor + CLI, adopted team-wide.">
+  <link rel="stylesheet" href="../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../assets/img/og-default.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../projects/">Projects</a></li>
+      <li><a href="./" class="active">Case Studies</a></li>
+      <li><a href="../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ TL;DR BAND ============ -->
+<section class="cs-tldr">
+
+  <header class="cs-hero">
+    <div class="wrap">
+      <p class="crumb"><a href="../">Home</a> · <a href="./">Case studies</a> · Tools</p>
+      <h1>UI Linter, Widget Blueprint Static Analysis</h1>
+      <p class="cs-lede">
+        A three-pillar UI-linting system for Unreal Widget Blueprints, a bug-DNA knowledge base
+        mined from real Jira, an AI-driven pre-merge checklist generator, and an in-Editor
+        deterministic linter. Rules come from bugs the team actually shipped, not opinions about
+        what could go wrong.
+      </p>
+
+      <div class="cs-meta">
+        <div>
+          <p class="k">Role</p>
+          <p class="v">Designer, engineer, owner (solo build, AI-assisted)</p>
+        </div>
+        <div>
+          <p class="k">Team</p>
+          <p class="v">Halo Studios · UI</p>
+        </div>
+        <div>
+          <p class="k">Technical Stack</p>
+          <p class="v">Unreal Engine · C++ plugin · Python · pytest · Copilot CLI</p>
+        </div>
+        <div>
+          <p class="k">Timeframe</p>
+          <p class="v">2025 · in active use until departure</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cs-tldr-inner">
+    <div class="result-grid">
+      <div class="result-card">
+        <p class="value">22</p>
+        <p class="label">Deterministic rules, 14 widget-tree + 8 event-graph</p>
+      </div>
+      <div class="result-card">
+        <p class="value">100+ → 17</p>
+        <p class="label">Real Jira bugs mined into 17 bug-DNA patterns across 6 categories</p>
+      </div>
+      <div class="result-card">
+        <p class="value">34</p>
+        <p class="label">Layout bugs eliminated in the first ~2 months post-adoption</p>
+      </div>
+      <div class="result-card">
+        <p class="value">Team-wide</p>
+        <p class="label">Adopted across the UI team, review process changed to require lint output</p>
+      </div>
+    </div>
+
+    <div class="cs-tldr-glance">
+      <h2>At a glance</h2>
+      <ul>
+        <li>Two surfaces: an in-Editor toolbar (<em>Lint This Widget</em>) with click-to-widget navigation, and a CLI for pre-merge / Copilot-driven review.</li>
+        <li>Rules are derived from a Jira-mined pattern library, every rule ties back to a bug someone actually shipped.</li>
+        <li>Adoption changed the review process itself: pull requests started including a linter screenshot as an evidence artifact.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<div class="cs-details-marker">
+  <span>Detail below</span>
+</div>
+
+<div class="wrap">
+  <div class="deep-dive">
+    <p>
+      <strong>Prefer the visual tour?</strong>
+      See the tool page for the editor UI, Message Log output, and gallery:
+      <a href="../projects/ui-linter/">UI Linter, project page →</a>
+    </p>
+  </div>
+</div>
+
+<!-- ============ DETAIL ============ -->
+<article class="cs-body">
+  <div class="wrap">
+
+    <h2>The problem</h2>
+    <h3>The same shapes of UI bug kept showing up on different screens, and reviewers had no way to catch all of them consistently.</h3>
+    <p>
+      Widget Blueprints are easy to author and hard to audit. Across the project, the same defect
+      patterns kept surfacing on different screens: text that clipped once the large-text
+      accessibility setting was on; localization overlap in longer-worded languages; hidden
+      widgets still accepting focus; delegate bindings never unbound; inconsistent style tokens
+      between screens built by external partners. Individually small, together they added up to
+      a steady drip of Jira tickets.
+    </p>
+    <p>
+      Code review couldn't scale to catch them. Reviewers didn't have time to open every widget,
+      simulate every text scale, walk every event-graph binding. Rare edge cases (large text,
+      long locales) were the ones falling through, exactly the ones a human reviewer is worst at.
+    </p>
+
+    <p class="cs-quote">
+      Standards were understood. They weren't enforced. Nothing about that is a quality problem, it's a scaling problem.
+    </p>
+
+
+    <h2>Constraints</h2>
+    <div class="constraint-grid">
+      <div class="constraint-card">
+        <h4>Two surfaces</h4>
+        <p>In-Editor for authors while they build, and CLI for pre-merge automation and Copilot-driven review. Same ruleset, same output.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Zero authoring friction</h4>
+        <p>If it slows down save, PIE, or hot reload, adoption dies. Findings must be one click away, and one click away from the offending widget.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Grounded in real bugs</h4>
+        <p>Every rule must trace back to at least one bug the team actually shipped. Rules from opinion don't survive review pushback.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Extensible by anyone</h4>
+        <p>Rules ship as data. Anyone should be able to add a rule when a new pattern shows up in Jira, without a plugin rebuild.</p>
+      </div>
+    </div>
+
+
+    <h2>The key idea</h2>
+    <div class="cs-big-idea">
+      <h3>Mine the bug database. Turn recurring patterns into deterministic checks. Surface them in the same place authors work.</h3>
+      <p>
+        The system is three cooperating pillars: a <strong>bug-DNA knowledge base</strong> mined
+        from 100+ Jira tickets into 17 patterns across 6 categories; an <strong>AI-driven
+        checklist generator</strong> that consumes widget-tree JSON and produces context-aware
+        review checklists; and a <strong>deterministic linter</strong> (22 rules covering both
+        the widget tree and the event graph) that runs inside the Editor and as a CLI. The three
+        share the same knowledge base, so every deterministic rule and every checklist item is
+        rooted in a real historical bug.
+      </p>
+    </div>
+
+    <figure class="cs-evidence">
+      <img src="../assets/img/case-studies/ui-linter/widget_header.jpeg" alt="Widget Blueprint editor toolbar with Lint This Widget and Add New Rule buttons.">
+      <figcaption>Editor entry points, <strong>Lint This Widget</strong> runs the full ruleset on the active WBP; <strong>Add New Rule</strong> launches Copilot with context to draft one.</figcaption>
+    </figure>
+
+    <figure class="cs-evidence">
+      <img src="../assets/img/case-studies/ui-linter/linter_window.jpeg" alt="Message Log window showing UI Linter category with dozens of tree and event-graph findings, severity icons, and clickable Fix links.">
+      <figcaption>The Message Log after a single lint pass, findings surface with severity, plain-language fix suggestions, click-to-widget navigation for widget-tree hits, and click-to-node navigation for event-graph hits.</figcaption>
+    </figure>
+
+
+    <h2>Production highlights</h2>
+    <div class="highlight-grid">
+      <div class="highlight-card">
+        <span class="tag">Architecture</span>
+        <h4>C++ / Python split by strength</h4>
+        <p>C++ owns Editor integration, traversal, and asset resolution (via a shared <code>UIPythonCppBridge</code>). Python owns rule authoring, tests, and CLI. Rules ship as JSON data, not builds.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Data</span>
+        <h4>Six real bug categories</h4>
+        <p>Layout/Scaling, Styling/Consistency, Text/Localization, Visibility/State, Input/Navigation, Data Binding, distilled from a Jira mining pass over the project's real defect history.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Adoption</span>
+        <h4>Findings where authors work</h4>
+        <p>Widget-tree hits jump to the offending widget in the Hierarchy panel; event-graph hits jump to the exact node. Fix suggestions include one-click <em>Fix → Widgets</em> actions for uncategorized variables and dead code.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">AI-assist</span>
+        <h4>A rule authoring loop, not a fixed set</h4>
+        <p><em>Add New Rule</em> launches Copilot CLI with the current widget as context, drafting a candidate rule from a real example. The 22-rule count grew over months as new patterns showed up in Jira.</p>
+      </div>
+    </div>
+
+
+    <h2>The showcase rule, L001</h2>
+    <p>
+      <code>L001, text-in-fixed-container</code>, is the rule that made the case for the whole
+      tool. It flags any text block placed inside a fixed-width container without an auto-size or
+      wrap contract. The pattern comes straight from the Layout/Scaling category, and it's the
+      exact class of bug that used to surface only after QA turned on large-text accessibility or
+      switched to a longer locale.
+    </p>
+    <p>
+      In practice: a single lint pass on the pictured skulls-display widget above surfaces
+      several <code>L001</code> hits alongside binding-leak (<code>L020</code>) and dead-code
+      (<code>L026 / L027</code>) findings. Each one is a bug that would previously have shipped
+      to QA before anyone noticed.
+    </p>
+
+
+    <h2>What I'd carry forward</h2>
+    <ul>
+      <li><strong>Rules from bugs, not opinion.</strong> Mining Jira first gave every rule a defensible provenance. When someone pushed back on a rule, the answer was "this is bug MTR-####" — hard to argue with.</li>
+      <li><strong>Auto-fix changed adoption behavior.</strong> A warning with a <em>Fix</em> button becomes a habit. Warnings without one become noise.</li>
+      <li><strong>The review process changed, not just the code.</strong> Once PRs included a linter screenshot as an evidence artifact, the tool stopped being optional in social practice.</li>
+      <li><strong>AI-assist for rule authoring is what let the system grow.</strong> A solo owner can't hand-maintain 22 rules and their fixtures indefinitely. Copilot-drafted rule scaffolding lowered the cost of adding the twenty-third.</li>
+    </ul>
+
+
+    <div class="cs-related-projects">
+      <h2>Related projects</h2>
+      <div class="links">
+        <a href="../projects/halo-ce/">Halo: Campaign Evolved</a>
+        <a href="hud-screen-effects.html">HUD Screen Effects</a>
+        <a href="halo-pip.html">PIP Widget, Material Development</a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/site.js" defer></script>
+
+</body>
+</html>

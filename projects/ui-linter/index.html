@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UI Linter for Unreal · Gabriel Reis e Silva</title>
+  <meta name="description" content="Widget Blueprint static analyzer for Unreal Engine. 22 deterministic rules mined from real Jira patterns, in-Editor toolbar + CLI, adopted team-wide.">
+  <link rel="stylesheet" href="../../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../../assets/img/tools/ui-linter/linter_window.jpeg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../" class="active">Projects</a></li>
+      <li><a href="../../case-studies/">Case Studies</a></li>
+      <li><a href="../../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="cs-body">
+  <div class="wrap">
+
+    <div class="project-title">
+      <h1>UI Linter</h1>
+      <p class="client">Halo Studios · Halo: Campaign Evolved · Internal Unreal plugin · 2025</p>
+    </div>
+
+    <div class="project-hero">
+      <img src="../../assets/img/tools/ui-linter/linter_window.jpeg" alt="UI Linter Message Log output showing dozens of rule findings across widget tree and event graph rules, with clickable Fix suggestions.">
+    </div>
+    <p class="media-caption">A three-pillar static analyzer for Unreal Widget Blueprints, 22 deterministic rules mined from real Jira patterns, surfacing findings inline in the Editor and via CLI.</p>
+
+    <div class="gallery">
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/tools/ui-linter/widget_header.jpeg" alt="Widget Blueprint editor toolbar with Lint This Widget and Add New Rule buttons." loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/tools/ui-linter/linter_window.jpeg" alt="Message Log window showing UI Linter category with dozens of tree and event-graph findings, severity icons, and clickable Fix links." loading="lazy">
+      </figure>
+
+    </div>
+
+    <div class="deep-dive">
+      <p>
+        <strong>Technical deep-dive.</strong>
+        How the tool was built, why the three pillars (Knowledge Base, Checklist Generator, Deterministic Linter), and what changed in team practice after adoption:
+        <a href="../../case-studies/ui-linter.html">UI Linter, Widget Blueprint Static Analysis →</a>
+      </p>
+    </div>
+
+    <div class="meta-table">
+      <dl>
+        <dt>Role</dt>
+        <dd>Designer, engineer, owner (solo build, AI-assisted)</dd>
+
+        <dt>Team</dt>
+        <dd>Halo Studios · UI</dd>
+
+        <dt>Technical Stack</dt>
+        <dd>Unreal Engine · C++ plugin · Python · pytest · Copilot CLI</dd>
+
+        <dt>Released</dt>
+        <dd>2025 · Internal Halo Studios tool</dd>
+
+        <dt>What it does</dt>
+        <dd>
+          <ul>
+            <li>Runs a deterministic pass over any Widget Blueprint, 14 widget-tree rules (L001–L014) and 8 event-graph rules (L020–L027).</li>
+            <li>Surfaces findings inline in the Editor's Message Log with clickable navigation to the offending widget or Blueprint node.</li>
+            <li>Offers one-click Fix actions for common issues (uncategorized variables, unused declarations, dead handlers).</li>
+            <li>Ships an identical CLI for pre-merge validation and Copilot-driven review.</li>
+            <li>"Add New Rule" launches Copilot CLI with the active widget as context to draft a new rule from a real example.</li>
+          </ul>
+        </dd>
+
+        <dt>Impact</dt>
+        <dd>
+          <ul>
+            <li>~34 layout bugs prevented in the first two months post-adoption.</li>
+            <li>Adopted team-wide as the pre-merge validation gate; pull requests started including linter output as an evidence artifact.</li>
+            <li>Rules are grounded in a Jira mining pass over 100+ real bugs, distilled into 17 pattern DNAs across 6 categories.</li>
+            <li>Continuously extended over months, contribution barrier kept low because rules ship as JSON, not builds.</li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../../scripts/site.js" defer></script>
+
+</body>
+</html>

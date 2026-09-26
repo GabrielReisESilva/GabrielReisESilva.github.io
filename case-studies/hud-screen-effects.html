@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HUD Screen Effects, GPU/Memory Study · Gabriel Reis e Silva</title>
+  <meta name="description" content="Evidence-based GPU/memory study of HUD screen effects in Unreal Engine using PIX, disproving inherited assumptions and producing platform-caveated guidance.">
+  <link rel="stylesheet" href="../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../assets/img/og-default.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../projects/">Projects</a></li>
+      <li><a href="./" class="active">Case Studies</a></li>
+      <li><a href="../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ TL;DR BAND ============ -->
+<section class="cs-tldr">
+
+  <header class="cs-hero">
+    <div class="wrap">
+      <p class="crumb"><a href="../">Home</a> · <a href="./">Case studies</a> · Performance</p>
+      <h1>HUD Screen Effects, GPU/Memory Study</h1>
+      <p class="cs-lede">
+        Replacing two years of inherited assumptions about screen-wide HUD effects with measured,
+        platform-caveated PIX evidence, including one result that was the opposite of what
+        everyone expected.
+      </p>
+
+      <div class="cs-meta">
+        <div>
+          <p class="k">Role</p>
+          <p class="v">Test designer, PIX analyst, documentation owner</p>
+        </div>
+        <div>
+          <p class="k">Team</p>
+          <p class="v">Halo Studios · UI + Tech Art</p>
+        </div>
+        <div>
+          <p class="k">Technical Stack</p>
+          <p class="v">Unreal Engine · PIX · UMG · Retainer Box · HLSL materials</p>
+        </div>
+        <div>
+          <p class="k">Timeframe</p>
+          <p class="v">2025</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cs-tldr-inner">
+    <div class="result-grid">
+      <div class="result-card">
+        <p class="value">~27%</p>
+        <p class="label">Reduction vs. baseline for a single Retainer Box wrap of the HUD (PC · 4K · idle MP)</p>
+      </div>
+      <div class="result-card">
+        <p class="value">~8%</p>
+        <p class="label">Additional improvement from material-only optimization on the same stack</p>
+      </div>
+      <div class="result-card negative">
+        <p class="value">+51%</p>
+        <p class="label">Honest cost of the tested glitch effect, published alongside the wins</p>
+      </div>
+      <div class="result-card">
+        <p class="value">6 → 1</p>
+        <p class="label">Configurations reduced to a single evidence-backed recommendation</p>
+      </div>
+    </div>
+
+    <div class="cs-tldr-glance">
+      <h2>At a glance</h2>
+      <ul>
+        <li>A controlled six-way PIX study across HUD screen-effect configurations, three captures per config to bound noise.</li>
+        <li>The older narrative that a single Retainer Box wrap was unaffordable was <strong>not supported by measurement</strong>. It was cheaper.</li>
+        <li>Contribution claimed is the methodology and the shift in team conversation, not the architecture landing (it didn't, for unrelated reasons).</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<div class="cs-details-marker">
+  <span>Detail below</span>
+</div>
+
+<!-- ============ DETAIL ============ -->
+<article class="cs-body">
+  <div class="wrap">
+
+
+    <h2>The problem</h2>
+    <h3>Inherited performance conclusions were driving live architectural decisions.</h3>
+    <p>
+      Screen-wide HUD effects, the family of full-screen post-process and Retainer Box treatments
+      that read as "the visor" to the player, are one of the most visible surfaces in the game
+      and one of the most expensive to render. Two conflicting narratives were driving decisions:
+      an older internal position that a single Retainer Box wrapping the HUD would be
+      unacceptably expensive at target resolution, and a newer team hypothesis that certain
+      material-based screen effects were "essentially free" because their instruction counts looked
+      low in isolation.
+    </p>
+
+    <p class="cs-quote">
+      Both narratives were being cited as fact. Neither had been re-measured under current-project conditions.
+    </p>
+
+    <figure class="cs-evidence">
+      <img src="../assets/img/case-studies/hud-screen-effects/pix.png" alt="PIX profiler capture showing D3D12 command list and SlateRenderToTarget instrumentation, with an in-game 4K Halo screenshot on the right.">
+      <figcaption>The measurement setup, PIX profiler instrumenting the HUD render path (<code>SlateRenderToTarget</code> highlighted), with the in-engine 4K reference frame on the right.</figcaption>
+    </figure>
+
+
+    <h2>Constraints</h2>
+    <div class="constraint-grid">
+      <div class="constraint-card">
+        <h4>Platform scope</h4>
+        <p>PC only. No matched Xbox capture in the window, so every conclusion had to be bounded to PC and re-validated later.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Resolution</h4>
+        <p>4K. Screen-space cost scales with pixel count, so lower-res measurement would understate the actual worst case.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Scene</h4>
+        <p>A specific idle multiplayer context chosen so HUD cost dominated the frame budget rather than being masked by gameplay variance.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Comparability</h4>
+        <p>All six configurations shared build, map, camera, and post-process stack. Any uncontrolled variable would undermine the whole study.</p>
+      </div>
+    </div>
+
+
+    <h2>The key idea</h2>
+    <div class="cs-big-idea">
+      <h3>Don't argue about inherited numbers. Re-measure them under current conditions, then quote every result with its caveats attached.</h3>
+      <p>
+        I built a six-way PIX matrix isolating the variables that mattered, Retainer Box presence,
+        material-only optimization, worst-case glitch effect, hybrids, then ran three captures per
+        configuration and reported every number with its scope attached (<em>"~27% reduction (PC ·
+        4K · idle MP · single capture set)"</em>). No detachable claims.
+      </p>
+    </div>
+
+    <figure class="cs-evidence">
+      <img src="../assets/img/case-studies/hud-screen-effects/pix_compare.png" alt="Side-by-side PIX captures across five HUD configurations: slightly optimized effect, original, glitch, no retainer, and full-screen effect (glitch). Timing durations are intentionally blurred.">
+      <figcaption>Six-way PIX comparison, labelled by configuration. Timing durations withheld; the comparison structure is what carries the argument.</figcaption>
+    </figure>
+
+
+    <h2>Production highlights</h2>
+    <div class="highlight-grid">
+      <div class="highlight-card">
+        <span class="tag">Method</span>
+        <h4>Six-way controlled matrix</h4>
+        <p>Baseline, material-only optimized, single Retainer Box wrap, worst-case glitch effect, and two hybrids, so interactions were exposed rather than reported additively.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Signal</span>
+        <h4>The surprise that reframed the conversation</h4>
+        <p>Under PC · 4K · idle MP, a single Retainer Box wrap was consistently <em>cheaper</em> than the documented baseline, not more expensive. That flipped the architectural conversation.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Honesty</span>
+        <h4>Publish the loss</h4>
+        <p>The glitch effect's +51% cost was quoted openly, up front. Reporting only the wins would have signalled cherry-picking; the loss is what let design push back on evidence rather than vibes.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Rigor</span>
+        <h4>Three captures per configuration</h4>
+        <p>Repeatability check for each config bounded noise and ruled out timing artifacts. Every quoted number was reproducible before it entered the report.</p>
+      </div>
+    </div>
+
+
+    <div class="callout">
+      <strong>Note on outcome ownership.</strong> The recommended architecture was not ultimately
+      adopted in the final HUD build for reasons unrelated to the measurement itself. The
+      contribution I claim is the methodology and evidence base, and the shift in how the team
+      talked about screen-effect cost afterward.
+    </div>
+
+
+    <h2>What I'd carry forward</h2>
+    <ul>
+      <li>Re-test inherited assumptions under current conditions. Two-year-old numbers almost always mask changes in engine version, render pipeline, resolution target, and content weight.</li>
+      <li>Preserve the caveats with the number. Detaching a result from its scope is how misinformation spreads onto the next project.</li>
+      <li>Publish the loss. The +51% glitch cost made the study credible. Only reporting wins signals cherry-picking.</li>
+      <li>Xbox validation is the outstanding gap. Screen-space cost curves differ enough between GPUs that PC results shouldn't be extrapolated blindly.</li>
+    </ul>
+
+
+    <div class="cs-related-projects">
+      <h2>Related projects</h2>
+      <div class="links">
+        <a href="../projects/halo-ce/">Halo: Campaign Evolved</a>
+        <a href="ui-linter.html">UI Linter</a>
+        <a href="halo-pip.html">PIP Widget, Material Development</a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/site.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Exclude raw source media — not linked from the site
+_old/
+_resources/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.vscode/
+.idea/
+
+# Build / temp
+*.tmp
+*.bak
+node_modules/

@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PIP Widget, Material Development for Space Transmissions · Gabriel Reis e Silva</title>
+  <meta name="description" content="A picture-in-picture transmission widget for Halo: Campaign Evolved. Analog-noise UI material with 7 exposed effect groups, audio-driven per-VO effects, and a 7-CustomUV performance pass.">
+  <link rel="stylesheet" href="../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../assets/img/card-pip.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../projects/">Projects</a></li>
+      <li><a href="./" class="active">Case Studies</a></li>
+      <li><a href="../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ TL;DR BAND ============ -->
+<section class="cs-tldr">
+
+  <header class="cs-hero">
+    <div class="wrap">
+      <p class="crumb"><a href="../">Home</a> · <a href="./">Case studies</a> · Material development</p>
+      <h1>PIP Widget, Material Development for Space Transmissions</h1>
+      <p class="cs-lede">
+        A picture-in-picture transmission widget for Halo: Campaign Evolved's space missions.
+        One Unreal material composes six analog-interference effects, exposes them as authorable
+        parameters, and drives them from the audio system per voice line, so a villain hijack
+        and an ally's final broadcast can look different without shipping different assets.
+      </p>
+
+      <div class="cs-meta">
+        <div>
+          <p class="k">Role</p>
+          <p class="v">Senior Technical Designer, UI material owner</p>
+        </div>
+        <div>
+          <p class="k">Team</p>
+          <p class="v">Halo Studios · UI · Audio · Narrative</p>
+        </div>
+        <div>
+          <p class="k">Technical Stack</p>
+          <p class="v">Unreal Engine · UMG · Material Editor · CustomUVs · Audio events</p>
+        </div>
+        <div>
+          <p class="k">Timeframe</p>
+          <p class="v">~2 days material dev · ~1 week review and tuning</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cs-tldr-inner">
+    <div class="result-grid">
+      <div class="result-card">
+        <p class="value">6</p>
+        <p class="label">Composable analog effects, all authored as exposed material parameters</p>
+      </div>
+      <div class="result-card">
+        <p class="value">−24 / +32</p>
+        <p class="label">Pixel-shader instructions moved to vertex via 7 CustomUVs, and 2 fewer pixel-shader texture samples</p>
+      </div>
+      <div class="result-card">
+        <p class="value">Per-line</p>
+        <p class="label">Effects driven by audio events keyed to individual VO lines, works in any language</p>
+      </div>
+      <div class="result-card">
+        <p class="value">2 days</p>
+        <p class="label">Material development, then a week of review-bound iteration with the Design Director</p>
+      </div>
+    </div>
+
+    <div class="cs-tldr-glance">
+      <h2>At a glance</h2>
+      <ul>
+        <li>Dialogue during space missions was being ignored, players had no visual anchor. Inspired by StarFox-style transmissions, we anchored VO to the ship's HUD as an analog-noise picture-in-picture panel.</li>
+        <li>One material composes six effects (texture-driven random, glitch, horizontal distortion, static, panning wave-distorted bars, wipe animation) plus chromatic aberration baked into the villain's texture.</li>
+        <li>Bound to audio events, not to VO strings, so localization "just works" and Harmony's hijack can escalate line-by-line without any code changes.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<div class="cs-details-marker">
+  <span>Detail below</span>
+</div>
+
+<!-- ============ DETAIL ============ -->
+<article class="cs-body">
+  <div class="wrap">
+
+    <h2>The problem</h2>
+    <h3>Dialogue during combat-adjacent space missions was competing with the fight and losing.</h3>
+    <p>
+      Several space-mission beats depend on the player <em>listening</em>, briefings, ally
+      transmissions, villain provocations. In playtest, dialogue that carried real story weight
+      was routinely missed: the player was busy dogfighting, the VO played, and nothing on screen
+      told them it mattered. Audio alone wasn't enough of a visual anchor to pull attention.
+    </p>
+    <p>
+      We needed a treatment that lived on the ship's HUD, felt native to the fiction, and could
+      change character per line, from a routine ally briefing, to Harmony's hijacked broadcast,
+      to an ally's final transmission going dead. One-off assets per line was not going to
+      survive iteration or localization.
+    </p>
+
+    <p class="cs-quote">
+      Missed dialogue isn't a performance problem, it's an attention problem. The fix has to make the eye do the audio system's job.
+    </p>
+
+
+    <h2>Constraints</h2>
+    <div class="constraint-grid">
+      <div class="constraint-card">
+        <h4>Story-legible, not just cool</h4>
+        <p>The effect has to <em>read</em>: normal transmission vs. hijacked vs. failing must all be recognizable at a glance, without dialogue popup boxes explaining themselves.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Language-agnostic</h4>
+        <p>Effect changes drive off audio events on individual VO lines, not off English strings, so the same beats land in any localized voice track.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Author-friendly parameters</h4>
+        <p>Six independently controllable effect groups. Designers and narrative should be able to dial glitch intensity for one line without touching another.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Cheap enough to ship in combat</h4>
+        <p>This runs during real combat frames. The material has to stay a UI cost, not a screen-effect cost. CustomUVs, not extra samplers.</p>
+      </div>
+    </div>
+
+
+    <h2>The key idea</h2>
+    <div class="cs-big-idea">
+      <h3>One material, six composable interference effects, all driven by audio events on individual voice lines.</h3>
+      <p>
+        The PIP is a single UMG material (<code>M_MetUI_Transmission</code>) whose behavior is a
+        stack of interference layers, texture-driven random values, an RGB-shift glitch,
+        horizontal distortion, static noise, panning wave-distorted screen bars, and a wipe
+        animation. Each layer is authored as an independent parameter group, so a hijacked
+        transmission is just <em>the same material</em> with different values. Effects trigger
+        on audio events fired against each voice line, which localizes cleanly and lets narrative
+        beats escalate per line without touching the material.
+      </p>
+    </div>
+
+    <figure class="cs-evidence">
+      <video muted loop playsinline preload="none" poster="../assets/img/case-studies/halo-pip/10_Final_Result.poster.jpg" data-lazy-video>
+        <source src="../assets/img/case-studies/halo-pip/10_Final_Result.web.mp4" type="video/mp4">
+      </video>
+      <figcaption>Final result, in-game preview. Harmony's hijacked broadcast in the corner PIP, glitch + chromatic aberration + rising interference, timed to individual voice lines rather than a scripted timeline.</figcaption>
+    </figure>
+
+
+    <h2>The effect stack</h2>
+    <p>
+      The material's inputs section takes a single source texture, then hands it through six
+      composable effect groups. Each group is one <code>MaterialFunction</code> or graph section
+      exposed as a parameter block; the compositor at the bottom of the graph blends and outputs.
+    </p>
+
+    <figure class="cs-evidence">
+      <img src="../assets/img/case-studies/halo-pip/00_Input.png" alt="Material graph inputs section showing all exposed parameter groups feeding the effect pipeline.">
+      <figcaption>Inputs section, every effect group exposes its own scale, speed, intensity, and pattern channels. The <code>_CovenantInterference</code> parameter drives the villain-specific rise.</figcaption>
+    </figure>
+
+    <figure class="cs-evidence">
+      <img src="../assets/img/case-studies/halo-pip/11_All_Parameters.png" alt="UMG parameter panel grouped into Color Effects, Distortion Effects, Horizontal Bars Effect, Static Noise Effect.">
+      <figcaption>The same material as seen by an author, grouped panels (<em>Color · Distortion · Horizontal Bars · Static Noise</em>) with intensity, tint, and pattern values dialable per instance.</figcaption>
+    </figure>
+
+    <h3>1. Texture-based random value generation</h3>
+    <p>
+      A single 256×256 noise texture sampled through a panner produces four independent
+      pseudo-random channels (R/G/B/A) that other effects hook into. Cheap, deterministic, and
+      lets every effect share one sampler instead of duplicating noise math.
+    </p>
+    <div class="cs-evidence-pair">
+      <figure class="cs-evidence">
+        <img src="../assets/img/case-studies/halo-pip/01_Random_Graph.png" alt="Material graph, texture-driven random value generator with four output channels.">
+        <figcaption>Graph, one panned texture sample feeds four output channels.</figcaption>
+      </figure>
+      <figure class="cs-evidence">
+        <video muted loop playsinline preload="none" poster="../assets/img/case-studies/halo-pip/01_Random_Output.poster.jpg" data-lazy-video>
+          <source src="../assets/img/case-studies/halo-pip/01_Random_Output.web.mp4" type="video/mp4">
+        </video>
+        <figcaption>Output, animated noise values that downstream effects modulate against.</figcaption>
+      </figure>
+    </div>
+
+    <h3>2. Glitch (RGB shift with pattern channels)</h3>
+    <p>
+      The classic broken-signal look. Offset the RGB channels along a moving pattern; the
+      <em>Glitch (XY:Speed, Z:Scale, W:Patterns)</em> parameter packs four knobs into one vector
+      so the whole effect can be reset in one line.
+    </p>
+    <div class="cs-evidence-pair">
+      <figure class="cs-evidence">
+        <img src="../assets/img/case-studies/halo-pip/02_Glitch_Graph.png" alt="Material graph, RGB-shift glitch effect with pattern channel input.">
+        <figcaption>Graph, RGB offset driven by the shared random channels and the packed glitch vector.</figcaption>
+      </figure>
+      <figure class="cs-evidence">
+        <video muted loop playsinline preload="none" poster="../assets/img/case-studies/halo-pip/02_Glitch_Output.poster.jpg" data-lazy-video>
+          <source src="../assets/img/case-studies/halo-pip/02_Glitch_Output.web.mp4" type="video/mp4">
+        </video>
+        <figcaption>Output, glitch effect at a mid-intensity value.</figcaption>
+      </figure>
+    </div>
+
+    <h3>3. Horizontal distortion</h3>
+    <p>
+      Row-based UV offset, useful on its own for a "signal breaking up" look and stackable with
+      the glitch for the villain's hijack. Same packed-vector convention: XY:Scale, Z:Intensity,
+      W:Patterns.
+    </p>
+    <div class="cs-evidence-pair">
+      <figure class="cs-evidence">
+        <img src="../assets/img/case-studies/halo-pip/04_HorizontalDist_Graph.png" alt="Material graph, horizontal distortion effect using a packed parameter vector.">
+        <figcaption>Graph, per-row UV offset driven by the packed <em>Horizontal Distortion</em> vector.</figcaption>
+      </figure>
+      <figure class="cs-evidence">
+        <video muted loop playsinline preload="none" poster="../assets/img/case-studies/halo-pip/04_HorizontalDist_Output.poster.jpg" data-lazy-video>
+          <source src="../assets/img/case-studies/halo-pip/04_HorizontalDist_Output.web.mp4" type="video/mp4">
+        </video>
+        <figcaption>Output, horizontal distortion at a subtle intensity.</figcaption>
+      </figure>
+    </div>
+
+    <h3>4. Panning horizontal bars with wave distortion</h3>
+    <p>
+      The vertical-crawl bars that sell "analog CRT scanline." Two independently-panning bar
+      layers with additive-blended wave distortion so they never repeat cleanly.
+    </p>
+    <div class="cs-evidence-pair">
+      <figure class="cs-evidence">
+        <img src="../assets/img/case-studies/halo-pip/06_screenbars_graph.png" alt="Material graph, multi-layered panning horizontal bars with wave distortion.">
+        <figcaption>Graph, two panning bar layers plus a wave-distortion pass on top.</figcaption>
+      </figure>
+      <figure class="cs-evidence">
+        <video muted loop playsinline preload="none" poster="../assets/img/case-studies/halo-pip/06_screenbars_output.poster.jpg" data-lazy-video>
+          <source src="../assets/img/case-studies/halo-pip/06_screenbars_output.web.mp4" type="video/mp4">
+        </video>
+        <figcaption>Output, panning bars carrying the analog-signal feel of the whole widget.</figcaption>
+      </figure>
+    </div>
+
+    <h3>5. Static noise</h3>
+    <p>
+      Straight film-grain / TV-static overlay, layered under the bars and glitch so the
+      transmission never sits fully still.
+    </p>
+    <div class="cs-evidence-pair">
+      <figure class="cs-evidence">
+        <img src="../assets/img/case-studies/halo-pip/07_StaticNoise_Graph.png" alt="Material graph, static noise generator with intensity parameter.">
+        <figcaption>Graph, cheap static overlay using the same shared noise texture.</figcaption>
+      </figure>
+      <figure class="cs-evidence">
+        <video muted loop playsinline preload="none" poster="../assets/img/case-studies/halo-pip/07_StaticNoise_Output.poster.jpg" data-lazy-video>
+          <source src="../assets/img/case-studies/halo-pip/07_StaticNoise_Output.web.mp4" type="video/mp4">
+        </video>
+        <figcaption>Output, static noise pass in isolation.</figcaption>
+      </figure>
+    </div>
+
+    <h3>6. Wipe animation</h3>
+    <p>
+      A parametric wipe that plays on transmission open/close, and, more importantly, on the
+      "signal-lost" beat when an ally's transmission cuts off mid-sentence.
+    </p>
+    <div class="cs-evidence-pair">
+      <figure class="cs-evidence">
+        <img src="../assets/img/case-studies/halo-pip/05_Animation_Graph.png" alt="Material graph, parameterized wipe animation used for transmission open, close, and cut.">
+        <figcaption>Graph, parameterized wipe used for open, close, and the abrupt "signal-lost" cut.</figcaption>
+      </figure>
+      <figure class="cs-evidence">
+        <video muted loop playsinline preload="none" poster="../assets/img/case-studies/halo-pip/05_Animation_Output.poster.jpg" data-lazy-video>
+          <source src="../assets/img/case-studies/halo-pip/05_Animation_Output.web.mp4" type="video/mp4">
+        </video>
+        <figcaption>Output, wipe animation, also driven off an audio event so it lands on the exact frame the VO ends.</figcaption>
+      </figure>
+    </div>
+
+    <h3>Chromatic aberration, and the trade-off we shipped</h3>
+    <p>
+      Chromatic aberration was authored as a seventh effect. In profiling we decided its cost
+      wasn't defensible for a widget that renders every combat frame, so we removed it from the
+      material. Instead, we baked it directly into Harmony's source texture, cheap, only applies
+      to him, and the villain is the only case that story-requires it. The trade-off: no
+      "aberration rising over time" for Harmony. Acceptable, because the glitch and horizontal
+      distortion layers already carry escalation.
+    </p>
+
+
+    <h2>Performance, 7 CustomUVs</h2>
+    <p>
+      Every material op that only depends on the vertex should live in the vertex shader. Unreal's
+      <code>CustomUV</code> outputs let you do exactly that, precompute a per-vertex value once
+      and interpolate it into the pixel shader, instead of recomputing it per pixel.
+    </p>
+    <p>
+      Seven of the panner/scale/offset math nodes across the six effect groups only depend on
+      quad vertices, so they went through <code>CustomUV0</code>–<code>CustomUV7</code> instead
+      of the pixel shader. The final numbers, off the material stats panel:
+    </p>
+    <ul class="cs-perf-list">
+      <li><strong>Total shipping cost:</strong> Pixel <code>181</code> instructions · Vertex <code>82</code> instructions.</li>
+      <li><strong>Delta from the CustomUV pass:</strong> −<code>24</code> pixel instructions moved to +<code>32</code> vertex instructions.</li>
+      <li><strong>Bonus:</strong> two fewer texture samples in the pixel shader by resolving UV math per-vertex.</li>
+    </ul>
+    <figure class="cs-evidence">
+      <img src="../assets/img/case-studies/halo-pip/09_CustomUVs_Graph.png" alt="Material graph, the CustomUV network that lifts panner and scale math out of the pixel shader.">
+      <figcaption>The CustomUV network. Anything that only depends on the quad's UVs, panner state, and per-material parameters gets computed here, once per vertex.</figcaption>
+    </figure>
+
+
+    <h2>Audio-driven, per voice line</h2>
+    <p>
+      The trigger surface is audio events, not narrative flags or English strings. I worked with
+      the audio team to attach per-line event tags so the material can respond to <em>this
+      specific VO cue</em>, not "when Harmony is talking" as a boolean. That decoupling is what
+      let Harmony's hijack escalate line by line, and what let the ally's final transmission cut
+      cleanly on the last syllable, without any code branch checking who's speaking.
+    </p>
+    <p>
+      It also means the effect ships in every localization for free, because the audio-event
+      timing is identical across voice tracks.
+    </p>
+
+
+    <h2>Two story beats, same material</h2>
+    <div class="highlight-grid">
+      <div class="highlight-card">
+        <span class="tag">Harmony's hijack</span>
+        <h4>Escalating interference, per line</h4>
+        <p>Baseline transmission → glitch rising → horizontal distortion adding, then the built-in aberration in the source texture reads as the signal fully compromised. All parameter changes on audio events, no timeline scripting.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Ally's last transmission</span>
+        <h4>Signal degrades, then cuts</h4>
+        <p>Static and bars intensify across a few lines, then the wipe animation fires on the final audio event, mid-sentence cut. The player understands what happened without a callout.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Author workflow</span>
+        <h4>Instanced material, dialable per screen</h4>
+        <p>Narrative and design can grab a material instance, change intensity/tint per beat, and drop it into a scene. No new material, no engineer round-trip.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Localization</span>
+        <h4>Effect changes are language-blind</h4>
+        <p>Audio events fire at the same timeline positions in every language, so a French Harmony hijack lands identically to an English one.</p>
+      </div>
+    </div>
+
+
+    <h2>What I'd carry forward</h2>
+    <ul>
+      <li><strong>Effect stacks are cheaper than effect variants.</strong> One material with six exposed parameter groups covers a wider design space than six separate materials, and stays instanced-cheap.</li>
+      <li><strong>Audio events are the right trigger surface for VO-driven visuals.</strong> Binding to strings or to narrative flags would have leaked into localization and into gameplay scripting. Audio events belong to the line and travel with it.</li>
+      <li><strong>CustomUVs are almost always worth the pass.</strong> −24 pixel instructions and −2 texture samples for +32 vertex instructions is a straight win at UI cost per pixel; the same pattern applies to almost every screen-space UI material we ship.</li>
+      <li><strong>Kill features when profiling asks.</strong> Chromatic aberration didn't survive the profiling pass, and the story didn't lose anything, because we asked "does the beat still read?" and the answer was yes.</li>
+      <li><strong>Review-bound iteration is a real cost.</strong> Two days of material work took a week of wall time because the Design Director's calendar gates the sign-off loop. Batching questions and shipping a tuning-instances build to review would have shrunk that.</li>
+    </ul>
+
+
+    <div class="cs-related-projects">
+      <h2>Related projects</h2>
+      <div class="links">
+        <a href="../projects/halo-ce/">Halo: Campaign Evolved</a>
+        <a href="hud-screen-effects.html">HUD Screen Effects</a>
+        <a href="ui-linter.html">UI Linter</a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/site.js" defer></script>
+
+</body>
+</html>

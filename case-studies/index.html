@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case Studies, Gabriel Reis e Silva</title>
+  <meta name="description" content="Technical case studies, UI systems, editor tooling, static analysis, and GPU/memory optimization work.">
+  <link rel="stylesheet" href="../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon-180.png">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../projects/">Projects</a></li>
+      <li><a href="./" class="active">Case Studies</a></li>
+      <li><a href="../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="cs-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="../">Home</a> / Case Studies</p>
+    <h1>Case studies</h1>
+    <p class="subtitle">
+      Technical deep-dives, problems, constraints, approach, and measured results.
+      Most involve UI systems, editor tooling, static analysis, or GPU / memory work.
+    </p>
+  </div>
+</header>
+
+<section class="block">
+  <div class="wrap">
+
+    <div class="case-grid">
+
+      <a class="case-card" href="hud-screen-effects.html">
+        <div class="thumb">
+          <img src="../assets/img/card-hud.jpg" alt="">
+          <span class="tag">Performance</span>
+        </div>
+        <div class="card-body">
+          <h3>HUD Screen Effects, GPU/Memory Study</h3>
+          <p class="meta">Halo Studios · Unreal Engine · PIX · 2025</p>
+          <p>Replaced tribal knowledge about screen-wide HUD effects with measured, platform-caveated PIX evidence, including one result that disproved the received wisdom.</p>
+          <span class="arrow">Read case study →</span>
+        </div>
+      </a>
+
+      <a class="case-card" href="ui-linter.html">
+        <div class="thumb">
+          <img src="../assets/img/card-linter.jpg" alt="">
+          <span class="tag">Tools</span>
+        </div>
+        <div class="card-body">
+          <h3>UI Linter, Widget Blueprint Static Analysis</h3>
+          <p class="meta">Halo Studios · C++ / Python · 2025</p>
+          <p>A 27-rule, 135-test static analyzer for Unreal Widget Blueprints that eliminated recurring defect classes from review and gave the UI team a deterministic pre-merge gate.</p>
+          <span class="arrow">Read case study →</span>
+        </div>
+      </a>
+
+      <a class="case-card" href="halo-pip.html">
+        <div class="thumb">
+          <img src="../assets/img/card-pip.jpg" alt="">
+          <span class="tag">Materials</span>
+        </div>
+        <div class="card-body">
+          <h3>PIP Widget, Material Development for Space Transmissions</h3>
+          <p class="meta">Halo Studios · Unreal Material Editor · 2025</p>
+          <p>One material, six composable analog-interference effects, driven by audio events on individual voice lines. A 7-CustomUV pass moved 24 pixel-shader instructions to vertex and dropped 2 texture samples.</p>
+          <span class="arrow">Read case study →</span>
+        </div>
+      </a>
+
+      <a class="case-card" href="fc24-intelligent-ar.html">
+        <div class="thumb">
+          <img src="../assets/img/card-ar.jpg" alt="">
+          <span class="tag">Systems</span>
+        </div>
+        <div class="card-body">
+          <h3>Intelligent AR: Reusable Widget System</h3>
+          <p class="meta">EA Sports FC 24 · Frostbite · 2023</p>
+          <p>A shared component library powering three contextual gameplay overlays. Turned a 4-day estimate into 2 days on FC 24, and a 2-day refresh into 4.5 hours on FC 25.</p>
+          <span class="arrow">Read case study →</span>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

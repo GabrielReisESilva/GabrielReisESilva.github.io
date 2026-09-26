@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect x="8" y="8" width="496" height="496" rx="96" ry="96" fill="#10172a" stroke="#24314c" stroke-width="4"/>
+  <g fill="none" stroke="#5aa8ff" stroke-width="44" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- top-left bracket -->
+    <path d="M 200 128 L 128 128 L 128 200"/>
+    <!-- top-right bracket -->
+    <path d="M 312 128 L 384 128 L 384 200"/>
+    <!-- bottom-left bracket -->
+    <path d="M 128 312 L 128 384 L 200 384"/>
+    <!-- bottom-right bracket -->
+    <path d="M 384 312 L 384 384 L 312 384"/>
+  </g>
+  <!-- center dot -->
+  <circle cx="256" cy="256" r="28" fill="#5aa8ff"/>
+</svg>

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intelligent AR: Reusable Widget System for FC 24 · Gabriel Reis e Silva</title>
+  <meta name="description" content="Three contextual gameplay overlays for EA Sports FC 24, built from one shared component library. 4-day work in 2 days on FC 24; 2-day refresh in 4.5 hours on FC 25.">
+  <link rel="stylesheet" href="../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../assets/img/og-default.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../projects/">Projects</a></li>
+      <li><a href="./" class="active">Case Studies</a></li>
+      <li><a href="../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ TL;DR BAND (hero + results + at-a-glance) ============ -->
+<section class="cs-tldr">
+
+  <header class="cs-hero">
+    <div class="wrap">
+      <p class="crumb"><a href="../">Home</a> · <a href="./">Case studies</a> · Systems</p>
+      <h1>Intelligent AR: Reusable Widget System for FC 24</h1>
+      <p class="cs-lede">
+        A family of three contextual gameplay overlays, Possession, Last 5 Shots, and Stamina,
+        all composed from one shared component library. The modularity cut delivery time in half
+        on FC 24, and made the FC 25 refresh a 4.5-hour job.
+      </p>
+
+      <div class="cs-meta">
+        <div>
+          <p class="k">Role</p>
+          <p class="v">Technical UI Designer</p>
+        </div>
+        <div>
+          <p class="k">Team</p>
+          <p class="v">10+ across engineering, design, production, QV</p>
+        </div>
+        <div>
+          <p class="k">Technical Stack</p>
+          <p class="v">Frostbite · UI shaders · SVG · dynamic layouts</p>
+        </div>
+        <div>
+          <p class="k">Shipped</p>
+          <p class="v">EA Sports FC 24 · September 2023</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cs-tldr-inner">
+    <div class="result-grid">
+      <div class="result-card">
+        <p class="value">4 d → 2 d</p>
+        <p class="label">FC 24 Possession panel, actual vs. 4-day estimate</p>
+      </div>
+      <div class="result-card">
+        <p class="value">2 d → 4.5 h</p>
+        <p class="label">FC 25 refresh, one edit propagated to every panel</p>
+      </div>
+      <div class="result-card">
+        <p class="value">5</p>
+        <p class="label">Reusable components in the shared library</p>
+      </div>
+      <div class="result-card">
+        <p class="value">3</p>
+        <p class="label">Distinct AR panels shipped from the same primitives</p>
+      </div>
+    </div>
+
+    <div class="cs-tldr-glance">
+      <h2>At a glance</h2>
+      <ul>
+        <li>One shared library of 5 primitives powers three distinct panels: Possession, Last 5 Shots, and Stamina.</li>
+        <li>Every panel is a composition of the same primitives, not a copy of the previous one.</li>
+        <li>The pattern carried into FC 25 with near-zero rebuild cost, and became inheritable by a different rotation of hands.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ DIVIDER ============ -->
+<div class="cs-details-marker">
+  <span>Detail below</span>
+</div>
+
+<!-- ============ DETAIL SECTIONS ============ -->
+<article class="cs-body">
+  <div class="wrap">
+
+    <h2>The problem</h2>
+    <h3>New feature, uncharted pattern, three panels on-screen at once.</h3>
+    <p>
+      Intelligent AR was a new gameplay-adjacent HUD family for FC 24, overlays that surface
+      match-relevant statistics during natural lulls in play, without stealing focus. Three
+      panels had to read as one visual language and be maintainable by a small team on a hard
+      schedule, but each carried different data, different affordances, and different pacing.
+    </p>
+
+    <p class="cs-quote">
+      Contextual but not distracting was easy to describe in review. Hard to specify up front.
+    </p>
+
+
+    <h2>Constraints</h2>
+    <div class="constraint-grid">
+      <div class="constraint-card">
+        <h4>Team scale</h4>
+        <p>10+ people across engineering, design, production, and QV. Coordination cost was real.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Design volatility</h4>
+        <p>Visual direction was going to shift late; the system had to absorb changes without a rebuild.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Cross-year handoff</h4>
+        <p>Whatever shipped in FC 24 would be inherited by a different rotation of hands on FC 25.</p>
+      </div>
+      <div class="constraint-card">
+        <h4>Reusable ≠ generic</h4>
+        <p>Shared components had to serve three distinct panel intents without homogenizing them.</p>
+      </div>
+    </div>
+
+
+    <h2>The key idea</h2>
+    <div class="cs-big-idea">
+      <h3>Do the breakdown once, at the family level. Every panel becomes a composition, not a copy.</h3>
+      <p>
+        I decomposed the AR family into five primitives before any panel was built,
+        <strong>ARPanel</strong>, <strong>ARPanel_Header</strong>, <strong>ARPanel_Background</strong>,
+        <strong>ARPanel_Corners</strong>, <strong>TeamCrest</strong>. Each has a defined input schema
+        and its own enter/exit animation. Possession, Last 5 Shots, and Stamina were then a matter of
+        assembling the same pieces differently.
+      </p>
+    </div>
+
+    <div class="breakdown-sequence">
+      <figure class="breakdown-step">
+        <p class="step-label"><span>Step 1</span> Panel identified</p>
+        <img src="../assets/img/case-studies/ar-panel/breakdown01.png" alt="Last 5 Shots panel highlighted inside the shared FC AR design language, broken down as a composition of Team Crest and ARPanel.">
+        <figcaption>Each ground-panel picks its slot in the shared visual language, then declares its composition.</figcaption>
+      </figure>
+      <figure class="breakdown-step">
+        <p class="step-label"><span>Step 2</span> Composition, one level down</p>
+        <img src="../assets/img/case-studies/ar-panel/breakdown02.png" alt="Last 5 Shots panel decomposed into AR Panel plus Team Crest, with their inputs and animation specs.">
+        <figcaption>The panel resolves into <strong>AR Panel</strong> + <strong>Team Crest</strong>, each with a defined input schema and enter/exit animation.</figcaption>
+      </figure>
+      <figure class="breakdown-step">
+        <p class="step-label"><span>Step 3</span> Primitives all the way down</p>
+        <img src="../assets/img/case-studies/ar-panel/breakdown03.png" alt="AR Panel further decomposed into ARPanel_Background and ARPanel_Corners primitives with their sizing, color and animation rules.">
+        <figcaption><strong>AR Panel</strong> is itself a composition of primitives. This is where the reuse pays off: the whole family shares the same background, corners, and animation grammar.</figcaption>
+      </figure>
+    </div>
+
+
+    <h2>Production highlights</h2>
+    <div class="highlight-grid">
+      <div class="highlight-card">
+        <span class="tag">Performance</span>
+        <h4>Text glow, shader → sprite</h4>
+        <p>The original custom shader had poor performance. Swapped for a fading glow sprite that read equally well at gameplay distance. Frame budget freed for panels the player actually notices.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Visual</span>
+        <h4>SVG look without shipping SVG at runtime</h4>
+        <p>Chevrons authored as SVG at design time; field lines animated with UV tricks (uv.x repeat, uv.y clamp) so a single texture produced the flowing-line effect without new shader work.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Motion</span>
+        <h4>Layouts that reflow mid-animation</h4>
+        <p>Every panel resizes gracefully when data changes size. Ring color uses a 3-way lerp, base → warning → critical, so stamina reads expressive rather than binary.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="tag">Signal</span>
+        <h4>Predicted trajectory over motion vectors</h4>
+        <p>Raw motion vectors were noisy. Drawing from the ball's predicted trajectory smoothed the visualization naturally over the frames a panel is on screen.</p>
+      </div>
+    </div>
+
+    <figure class="cs-refresh-proof">
+      <img src="../assets/img/case-studies/ar-panel/change.png" alt="Before and after of the FC 25 xG (expected goal) widget: original compact version on the left, refreshed larger version on the right.">
+      <figcaption>The FC 25 refresh, one composition edit, propagated everywhere. What was a two-day change on FC 24 shipped in 4.5 hours.</figcaption>
+    </figure>
+
+
+    <h2>What I'd carry forward</h2>
+    <ul>
+      <li>Dynamic widgets cost more up front, but the savings start on the second use. The rushed one-off gets more expensive with every reuse.</li>
+      <li>In-game feedback beats spec review for anything that lives in real gameplay, panels read differently in-engine than in isolation.</li>
+      <li>Cross-team communication matters more than any single design decision when 10+ people are shipping the same system.</li>
+      <li>Tools should be designed for their whole lifecycle: install, use, <em>and</em> maintain or extend.</li>
+    </ul>
+
+
+    <!-- ============ RELATED ============ -->
+    <div class="cs-related-projects">
+      <h2>Related projects</h2>
+      <div class="links">
+        <a href="../projects/fc-24/">EA Sports FC 24</a>
+        <a href="../projects/fc-25/">EA Sports FC 25</a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-foot">
+  <div class="wrap two-col">
+    <div>
+      <p><strong>Gabriel Reis e Silva</strong></p>
+      <p class="muted">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div>
+      <p><a href="../about/">Résumé and contact</a></p>
+      <p class="muted">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/site.js" defer></script>
+
+</body>
+</html>
