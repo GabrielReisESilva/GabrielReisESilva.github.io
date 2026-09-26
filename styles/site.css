@@ -628,8 +628,7 @@ section.block.alt { background: var(--bg-alt); }
    viewport on desktop while still constraining prose to a readable measure.
    Gallery keeps 2 columns so each image gets more room. */
 .cs-body:has(.project-title) .wrap { max-width: var(--wrap); }
-.cs-body:has(.project-title) .media-caption,
-.cs-body:has(.project-title) p:not(.client):not(.media-caption) {
+.cs-body:has(.project-title) .wrap > p:not(.client):not(.media-caption) {
   max-width: 68ch;
 }
 
