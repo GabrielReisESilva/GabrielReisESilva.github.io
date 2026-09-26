@@ -1,8 +1,8 @@
-# gabrielreisesilva.github.io
+# gaberes.com
 
 Portfolio site for Gabriel Reis e Silva — Senior Technical Designer at Halo Studios.
 
-Live at **https://gabrielreisesilva.github.io/**.
+Live at **https://gaberes.com/** (served by GitHub Pages from this repo).
 
 ## Local preview
 
