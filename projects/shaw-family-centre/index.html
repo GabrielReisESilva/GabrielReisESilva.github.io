@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shaw Family History Centre · Gabriel Reis e Silva</title>
+  <meta name="description" content="An eight-monitor interactive timeline installation built in Unity for NGX Interactive. Multi-touch nodes, per-monitor audio routing, a custom video player, and a data pipeline for 200+ asset nodes.">
+  <link rel="stylesheet" href="../../styles/site.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/favicon-180.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../../assets/img/installations/shaw-family-centre/_banner.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://gaberes.com/projects/shaw-family-centre/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Shaw Family History Centre",
+    "about": "Eight-monitor interactive timeline installation built in Unity",
+    "creator": { "@type": "Organization", "name": "NGX Interactive" },
+    "datePublished": "2019",
+    "contributor": {
+      "@type": "Person",
+      "name": "Gabriel Reis e Silva",
+      "jobTitle": "Creative Technologist",
+      "url": "https://gaberes.com/",
+      "sameAs": [
+        "https://www.linkedin.com/in/gabriel-res/",
+        "https://github.com/GabrielReisESilva"
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="brand-full">Gabriel Reis e Silva</span><span class="brand-short">GR</span></a>
+    <ul>
+      <li><a href="../../">Home</a></li>
+      <li><a href="../" class="active">Projects</a></li>
+      <li><a href="../../case-studies/">Case Studies</a></li>
+      <li><a href="../../about/">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<article class="cs-body">
+  <div class="wrap">
+
+    <div class="project-title">
+      <h1>Shaw Family History Centre</h1>
+      <p class="client">NGX Interactive · Installation · 2019</p>
+    </div>
+
+    <div class="project-hero">
+      <img src="../../assets/img/installations/shaw-family-centre/timeline.gif" alt="Eight-monitor interactive timeline wall for the Shaw Family History Centre">
+    </div>
+    <p class="media-caption">Eight touch monitors aligned into one continuous wall, presenting the Shaw family and company history as an interactive timeline of themed and year nodes that expand on touch.</p>
+
+    <!-- ============ GALLERY ============ -->
+    <div class="gallery">
+
+      <figure class="gallery-item">
+        <video muted loop playsinline preload="none" poster="../../assets/img/installations/shaw-family-centre/demo.poster.jpg" data-lazy-video>
+          <source src="../../assets/img/installations/shaw-family-centre/demo.web.mp4" type="video/mp4">
+        </video>
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/mockup_image.jpg" alt="Single-monitor view of a year node expanded to an image story" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/mockup_video.jpg" alt="Single-monitor view of a year node expanded to a video story" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/mockup_image2.jpg" alt="Expanded image node with caption text" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/mockup_video2.jpg" alt="Expanded video node with the custom player controls" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/screencapture_landing.jpg" alt="Attract-state landing screen on a single monitor" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/screencapture_node.jpg" alt="Expanded node screen capture" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/wireframe_image.png" alt="Wireframe for the image-node layout" loading="lazy">
+      </figure>
+
+      <figure class="gallery-item">
+        <img src="../../assets/img/installations/shaw-family-centre/wireframe_video.png" alt="Wireframe for the video-node layout" loading="lazy">
+      </figure>
+
+    </div>
+
+    <!-- ============ DEEP DIVE ============ -->
+    <div class="deep-dive">
+      <p>The wall is eight touch monitors standing side by side as one continuous surface. Visitors browse a timeline of the Shaw family's and company's history, where big <strong>theme</strong> nodes let them browse every relevant event for a year, and smaller <strong>year</strong> nodes open a single story with text and either an image or a video. I was handed the UX specs, mockups, and assets, and built the entire real-time experience in Unity.</p>
+    </div>
+
+    <div class="meta-table">
+      <dl>
+        <dt>Role</dt>
+        <dd>Creative Technologist</dd>
+
+        <dt>Client</dt>
+        <dd>NGX Interactive</dd>
+
+        <dt>Technical Stack</dt>
+        <dd>Unity · multi-display · multi-touch · per-monitor audio routing · scriptable-object pipeline</dd>
+
+        <dt>Released</dt>
+        <dd>2019 · Installation</dd>
+
+        <dt>What I did</dt>
+        <dd>
+          <ul>
+            <li>Built the complete real-time experience in Unity from the handed-off UX specs, mockups, and assets.</li>
+            <li>Handled multi-monitor interaction, processing multiple simultaneous touch inputs across the eight-screen wall.</li>
+            <li>Routed audio per monitor, so a video opened on screen #5 played out of that screen, by remapping the video's audio channels to the target display and assigning each screen its own camera listening to predetermined channels.</li>
+            <li>Wrote a custom video player with a scrubbable progress bar, volume, and play/pause controls.</li>
+            <li>Authored the animation layer: nodes opening, media opening, year-to-year browsing, and idle attract states.</li>
+            <li>Built a data pipeline that converted a spreadsheet of 200+ nodes into Unity scriptable objects, so content edits were made in an external file and ported in without rebuilding the project.</li>
+          </ul>
+        </dd>
+
+        <dt>Constraints</dt>
+        <dd>
+          <ul>
+            <li>Eight-monitor wall treated as one continuous, synchronized surface.</li>
+            <li>Simultaneous multi-touch across all screens at once.</li>
+            <li>Audio had to localize to the monitor the visitor was interacting with.</li>
+            <li>Massive content set, 200+ nodes with per-event text and media, that had to stay editable by non-engineers.</li>
+            <li>Developed and verified against a single test screen, since I was not part of the on-site venue setup.</li>
+          </ul>
+        </dd>
+
+        <dt>What shipped</dt>
+        <dd>
+          <ul>
+            <li>A synchronized eight-display timeline wall with simultaneous multi-touch interaction.</li>
+            <li>Per-monitor audio routing driven by per-screen cameras listening on dedicated channels.</li>
+            <li>A reusable custom video player with full transport controls.</li>
+            <li>A content pipeline converting external spreadsheet data into scriptable objects for fast, build-free updates.</li>
+            <li>A full animation set for nodes, media, timeline navigation, and idle attract loops.</li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="foot-note"><span>The materials, blueprints, and textures shown on this site are recreations meant to resemble work I did internally. They are not the actual assets that shipped in the released games.</span></p>
+    <div class="foot-col">
+      <p class="foot-brand">Gabriel Reis e Silva</p>
+      <p class="foot-tag">Senior Technical Designer · Kirkland, WA</p>
+    </div>
+    <div class="foot-col foot-right">
+      <p><a href="../../about/">Résumé and contact</a></p>
+      <p class="foot-copy">© 2026 Gabriel Reis e Silva</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../../scripts/site.js" defer></script>
+
+</body>
+</html>
