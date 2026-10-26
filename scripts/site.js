@@ -145,3 +145,26 @@
     else if (e.key === 'ArrowLeft') prev();
   });
 })();
+
+/* --- Rotating job title in the hero eyebrow --- */
+(function () {
+  var el = document.querySelector('.title-rotator');
+  if (!el) return;
+  var titles = (el.getAttribute('data-titles') || '')
+    .split('|').map(function (s) { return s.trim(); }).filter(Boolean);
+  if (titles.length < 2) return;
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return; // keep the static combined fallback text
+
+  var i = 0;
+  el.textContent = titles[0];
+  setInterval(function () {
+    el.classList.add('is-fading');
+    setTimeout(function () {
+      i = (i + 1) % titles.length;
+      el.textContent = titles[i];
+      el.classList.remove('is-fading');
+    }, 320);
+  }, 2800);
+})();

@@ -173,6 +173,15 @@ p { color: var(--text-body); }
   margin: 0 0 16px;
   font-weight: 600;
 }
+.title-rotator {
+  transition: opacity 320ms ease;
+}
+.title-rotator.is-fading {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-rotator { transition: none; }
+}
 .hero h1 {
   font-size: clamp(36px, 5.5vw, 56px);
   margin: 0 0 20px;
